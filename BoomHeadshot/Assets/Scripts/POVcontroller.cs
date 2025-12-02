@@ -6,11 +6,13 @@ public class POVcontroller : MonoBehaviour
     public Transform player;
     public float camSencitivity = 4f;
     public bool mouseLock;
+    public bool ads;
     private float camVerticalRotation;
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
         mouseLock = true;
+        ads = false;
     }
 
     // Update is called once per frame
@@ -35,11 +37,11 @@ public class POVcontroller : MonoBehaviour
 
         if (Input.GetMouseButtonDown(1))
         {
-            Camera.main.fieldOfView = 30f;
+            ADS();
         }
-        else
+        else if(Input.GetMouseButtonUp(1))
         {
-            Camera.main.fieldOfView = 60f;
+            ADS();
         }
     }
 
@@ -49,5 +51,12 @@ public class POVcontroller : MonoBehaviour
         else Cursor.lockState = CursorLockMode.None;
         Cursor.visible = mouseLock;
         mouseLock = !mouseLock;
+    }
+
+    public void ADS()
+    {
+        if(!ads){Camera.main.fieldOfView = 30f; Debug.Log("enter ads");}
+        else{Camera.main.fieldOfView = 60f; Debug.Log("exit ads");}
+        ads = !ads;
     }
 }

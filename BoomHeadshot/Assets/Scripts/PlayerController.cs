@@ -13,11 +13,11 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float x = Input.GetAxisRaw("Horizontal");
-        float z = Input.GetAxisRaw("Vertical");
+        float x = Input.GetAxis("Horizontal");
+        float z = Input.GetAxis("Vertical");
 
-        Vector3 move = new Vector3(x,0,z).normalized;
+        Vector3 move = (transform.right * x + transform.forward * z).normalized;
 
-        rb.linearVelocity = move * speed;
+        rb.linearVelocity = new Vector3(move.x * speed, rb.linearVelocity.y, move.z * speed);
     }
 }

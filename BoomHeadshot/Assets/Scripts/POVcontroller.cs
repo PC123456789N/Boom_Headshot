@@ -10,38 +10,44 @@ public class POVcontroller : MonoBehaviour
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
+        mouseLock = true;
     }
 
     // Update is called once per frame
     void Update()
     {
-        //Catches Inputs
-        float InputX = Input.GetAxis("Mouse X")*camSencitivity;
-        float InputY = Input.GetAxis("Mouse Y")*camSencitivity;
-
-        //Process Input into Movement (Camera Moves Up and Down!)
-        camVerticalRotation -= InputY;
-        camVerticalRotation = Mathf.Clamp(camVerticalRotation, -90f, 90f);
-        transform.localEulerAngles = Vector3.right * camVerticalRotation;
-
-        //Process Input into Movement(Character Moves Left and Right, Dragging the Camera)
-
-        player.Rotate(Vector3.up * InputX);
-    }
-
-    public void ToggleLockMouse(bool locked)
-    {
-        if (!locked)
+        if (mouseLock)
         {
-            Cursor.lockState = CursorLockMode.Locked;
-            locked = true;
+            float mouseX = Input.GetAxis("Mouse X") * camSencitivity;
+            float mouseY = Input.GetAxis("Mouse Y") * camSencitivity;
+
+            camVerticalRotation -= mouseY;
+            camVerticalRotation = Mathf.Clamp(camVerticalRotation, -90f, 90f);
+
+            transform.localRotation = Quaternion.Euler(camVerticalRotation, 0f, 0f);
+            player.Rotate(Vector3.up * mouseX);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Return))
+        {
+            ToggleLockMouse();
+        }
+
+        if (Input.GetMouseButtonDown(1))
+        {
+            Camera.main.fieldOfView = 30f;
         }
         else
         {
-            Cursor.lockState = CursorLockMode.None;
-            Cursor.visible = true;
-            locked = false;
+            Camera.main.fieldOfView = 60f;
         }
+    }
 
+    public void ToggleLockMouse()
+    {
+        if (!mouseLock)Cursor.lockState = CursorLockMode.Locked;
+        else Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = mouseLock;
+        mouseLock = !mouseLock;
     }
 }

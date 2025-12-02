@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class POVcontroller : MonoBehaviour
 {
@@ -8,6 +9,8 @@ public class POVcontroller : MonoBehaviour
     public bool mouseLock;
     public bool ads;
     private float camVerticalRotation;
+
+    [SerializeField] private GameObject sight;
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -38,6 +41,7 @@ public class POVcontroller : MonoBehaviour
         if (Input.GetMouseButtonDown(1))
         {
             ADS();
+
         }
         else if(Input.GetMouseButtonUp(1))
         {
@@ -55,8 +59,8 @@ public class POVcontroller : MonoBehaviour
 
     public void ADS()
     {
-        if(!ads){Camera.main.fieldOfView = 30f; Debug.Log("enter ads");}
-        else{Camera.main.fieldOfView = 60f; Debug.Log("exit ads");}
+        if(!ads){Camera.main.fieldOfView = 10f; sight.SetActive(true); camSencitivity = 1f;}
+        else{Camera.main.fieldOfView = 60f; sight.SetActive(false); camSencitivity = 4f;}
         ads = !ads;
     }
 }

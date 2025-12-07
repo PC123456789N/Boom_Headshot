@@ -30,6 +30,7 @@ public class POVcontroller : MonoBehaviour
             camVerticalRotation = Mathf.Clamp(camVerticalRotation, -90f, 90f);
 
             transform.localRotation = Quaternion.Euler(camVerticalRotation, 0f, 0f);
+            
             player.Rotate(Vector3.up * mouseX);
         }
 

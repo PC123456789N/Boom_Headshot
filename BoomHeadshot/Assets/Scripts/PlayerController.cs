@@ -5,7 +5,10 @@ public class PlayerController : MonoBehaviour
     float speed = 5f;
     private Rigidbody rb;
 
-    [SerializeField]private GameObject shotPos;
+    public int bulletVelocity;
+
+    [SerializeField]private Transform camPos;
+    [SerializeField]private GameObject chocoBullet;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -22,6 +25,12 @@ public class PlayerController : MonoBehaviour
 
         rb.linearVelocity = new Vector3(move.x * speed, rb.linearVelocity.y, move.z * speed);
 
-        if(Input.GetMouseButtonDown(0));
+        if (Input.GetMouseButtonDown(0))
+        {
+            GameObject bullet = Instantiate(chocoBullet, camPos.position, camPos.rotation);
+            Rigidbody bulletRB = bullet.GetComponent<Rigidbody>();
+            bulletRB.linearVelocity = camPos.forward * bulletVelocity;
+        }
+        ;
     }
 }

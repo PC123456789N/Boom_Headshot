@@ -60,7 +60,7 @@ public class POVcontroller : MonoBehaviour
 
     public void ADS()
     {
-        if(!ads){Camera.main.fieldOfView = 10f; sight.SetActive(true); camSencitivity = 1f;}
+        if(!ads){Camera.main.fieldOfView = 5f; sight.SetActive(true); camSencitivity = 0.5f;}
         else{Camera.main.fieldOfView = 60f; sight.SetActive(false); camSencitivity = 4f;}
         ads = !ads;
     }

@@ -8,7 +8,7 @@ public class NPCController : MonoBehaviour
     {
         FSM = new FiniteStateMachine();
 
-        var Idle = new IdleState(transform, GetComponent<Rigidbody>(), GetComponent<Animator>());
+        var Idle = new IdleState(transform, GetComponent<Rigidbody>(), GetComponent<Animator>(), FSM);
         FSM.ChangeState(Idle);
     }
 

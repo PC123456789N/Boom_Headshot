@@ -2158,7 +2158,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72d6a30397e8a52499f2f8503c569def, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bulletVelocity: 200
+  bulletVelocity: 100
   camPos: {fileID: 330585546}
   chocoBullet: {fileID: 4185037510970504538, guid: ce58e90d2ac6deb40b689eafa4666807, type: 3}
 --- !u!136 &1097242159

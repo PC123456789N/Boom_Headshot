@@ -2,40 +2,38 @@ using UnityEngine;
 
 public class shot : MonoBehaviour
 {
-    private Rigidbody rb;
-    private bool canColide;
-    private float timer = 0f;
+    private Vector3 lastPosition;
+    private float timeLimit = 0f;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    private void Start()
     {
-        rb = GetComponent<Rigidbody>();
-        canColide = false;
+        lastPosition = transform.position;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        timer += Time.deltaTime;
-        if(timer > 0.2f){canColide = true;}
+        if (transform.position == lastPosition)
+        {
+            timeLimit += Time.deltaTime;
+            if (timeLimit >= 5f)
+            {
+                Destroy(gameObject);
+                PlayerController.instance.setShotFired(false);
+            }
+        }
+        else
+        {
+            timeLimit = 0f;
+            lastPosition = transform.position;
+        }
     }
+
     private void OnTriggerEnter(Collider other)
     {
-        if (canColide)
+        if (other.CompareTag("inivisiwall"))
         {
-            //rb.isKinematic = true;
-            Debug.Log("Colided with" + other.name);    
+            Destroy(gameObject);
+            PlayerController.instance.setShotFired(false);
         }
-        
-    }
-
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("invisiwall"))
-        {
-            Debug.Log("WABLUA.");
-            Destroy(gameObject);    
-        }
-        
     }
 }

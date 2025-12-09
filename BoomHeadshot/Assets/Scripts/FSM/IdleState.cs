@@ -4,8 +4,6 @@ public class IdleState : FSMInterface
     private readonly Transform NPCpos;
     private readonly Rigidbody rb;
     private readonly Animator anima;
-    float countdown = 0f;
-    float detectRadius = 8f;
     private FiniteStateMachine FSM;
     public IdleState(Transform pos, Rigidbody body, Animator anim, FiniteStateMachine fsm)
     {
@@ -15,6 +13,8 @@ public class IdleState : FSMInterface
         FSM = fsm;
     }
 
+    float countdown = 0f;
+
     public void Enter()
     {
         anima.SetBool("Walking", false);
@@ -23,7 +23,7 @@ public class IdleState : FSMInterface
 
     public void Tick()
     {
-        Collider[] hits = Physics.OverlapSphere(NPCpos.position, detectRadius);
+        Collider[] hits = Physics.OverlapSphere(NPCpos.position, 8f);
         foreach (var hit in hits)
         {
             if (hit.CompareTag("ChocoBullet"))
@@ -49,8 +49,8 @@ public class IdleState : FSMInterface
         else
         {
             anima.SetBool("Walking", true);
-            NPCpos.rotation = Quaternion.Euler(0, Random.Range(0, 360), 0);
-            rb.linearVelocity = NPCpos.forward * 3;
+            NPCpos.rotation = Quaternion.Euler(0f, Random.Range(0f, 360f), 0f);
+            rb.linearVelocity = NPCpos.forward * 3f;
         }
 
         countdown = Random.Range(1f, 4f);

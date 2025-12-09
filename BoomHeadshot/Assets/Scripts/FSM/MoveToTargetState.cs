@@ -8,9 +8,6 @@ public class MoveToTargetState : FSMInterface
     private readonly Transform target;
     private readonly FiniteStateMachine FSM;
 
-    float speed = 4f;
-    float stopDistance = 1.2f;
-
     public MoveToTargetState(Transform pos, Rigidbody body, Animator anim, Transform t, FiniteStateMachine fsm)
     {
         NPCpos = pos;
@@ -35,7 +32,7 @@ public class MoveToTargetState : FSMInterface
 
         float dist = Vector3.Distance(NPCpos.position, target.position);
 
-        if (dist <= stopDistance)
+        if (dist <= 1.2f)
         {
             anima?.SetBool("Walking", false);
             rb.linearVelocity = Vector3.zero;
@@ -49,7 +46,7 @@ public class MoveToTargetState : FSMInterface
 
         Vector3 dir = (target.position - NPCpos.position).normalized;
         NPCpos.forward = dir;
-        rb.linearVelocity = dir * speed;
+        rb.linearVelocity = dir * 4f;
     }
 
     public void Exit()

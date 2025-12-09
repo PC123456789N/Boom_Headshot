@@ -2,24 +2,23 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    public static PlayerController instance;
+
     float speed = 5f;
-    private Rigidbody rb;
+    private Rigidbody rb, bulletRB;
 
     public int bulletVelocity;
     private bool shotFired;
-
-    //for bullet
-    private Rigidbody bulletRB;
     private Vector3 hitPos;
 
-
-    [SerializeField]private Transform camPos;
-    [SerializeField]private GameObject chocoBullet;
+    [SerializeField] private Transform camPos;
+    [SerializeField] private GameObject chocoBullet;
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         rb = GetComponent<Rigidbody>();
-        shotFired = false;
+        setShotFired(false);
     }
 
     // Update is called once per frame
@@ -37,31 +36,39 @@ public class PlayerController : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit;
 
-            if (Physics.Raycast(ray, out hit, 3000f)) 
+            if (Physics.Raycast(ray, out hit, 3000f) && !hit.collider.CompareTag("inivisiwall"))
             {
-                Debug.Log("Acertou: " + hit.collider.name);
-
-                // Exemplo: acessar posição
                 hitPos = hit.point;
-                // hit.collider.gameObject;
             }
-            
-            
+
             GameObject bullet = Instantiate(chocoBullet, camPos.position, camPos.rotation);
             bulletRB = bullet.GetComponent<Rigidbody>();
             bulletRB.linearVelocity = camPos.forward * bulletVelocity;
-            shotFired = true;
-
-            
+            setShotFired(true);
         }
 
         if (shotFired && Vector3.Distance(bulletRB.position, hitPos) < 2f)
-                {
-                    bulletRB.linearVelocity = Vector3.zero;
-                    Debug.Log("Rigidbody parado.");
-                    shotFired = false;
-                }
-        ;
-        
+        {
+            bulletRB.linearVelocity = Vector3.zero;
+            setShotFired(false);
+        }
+    }
+
+    private void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+
+    public void setShotFired(bool state)
+    {
+        shotFired = state;
     }
 }

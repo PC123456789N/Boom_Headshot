@@ -37,7 +37,11 @@ public class MoveToTargetState : FSMInterface
             anima?.SetBool("Walking", false);
             rb.linearVelocity = Vector3.zero;
 
-            if (target != null) GameObject.Destroy(target.gameObject);
+            if (target != null) {
+                GameObject.Destroy(target.gameObject);
+                GameController.instance.IncreaseShots();
+                GameController.instance.IncreseScore();
+            }
 
             FSM.ChangeState(new DanceState(NPCpos, rb, anima));
             return;

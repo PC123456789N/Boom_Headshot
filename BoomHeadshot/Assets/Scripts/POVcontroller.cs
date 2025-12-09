@@ -10,7 +10,7 @@ public class POVcontroller : MonoBehaviour
     public bool ads;
     private float camVerticalRotation;
 
-    [SerializeField] private GameObject sight;
+    [SerializeField] private GameObject sight, win, lose;
     void Start()
     {
         Cursor.lockState = CursorLockMode.Locked;
@@ -48,6 +48,18 @@ public class POVcontroller : MonoBehaviour
         {
             ADS();
         }
+
+        
+        if (GameController.instance.GetScore() >= 3)
+        {
+            win.SetActive(true);
+            Time.timeScale = 0f;
+        }
+        else if (GameController.instance.GetShots() >= 8)
+        {
+            lose.SetActive(true);
+            Time.timeScale = 0f;
+        }
     }
 
     public void ToggleLockMouse()
@@ -60,8 +72,17 @@ public class POVcontroller : MonoBehaviour
 
     public void ADS()
     {
-        if(!ads){Camera.main.fieldOfView = 5f; sight.SetActive(true); camSencitivity = 0.5f;}
-        else{Camera.main.fieldOfView = 60f; sight.SetActive(false); camSencitivity = 4f;}
+        if (!ads)
+        {
+            Camera.main.fieldOfView = 5f; 
+            sight.SetActive(true); 
+            camSencitivity = 0.5f;
+        }
+        else {
+            Camera.main.fieldOfView = 60f; 
+            sight.SetActive(false); 
+            camSencitivity = 4f;
+        }
         ads = !ads;
     }
 }

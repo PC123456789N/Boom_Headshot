@@ -18,6 +18,7 @@ public class shot : MonoBehaviour
             if (timeLimit >= 5f)
             {
                 Destroy(gameObject);
+                GameController.instance.IncreaseShots();
                 PlayerController.instance.setShotFired(false);
             }
         }
@@ -33,6 +34,7 @@ public class shot : MonoBehaviour
         if (other.CompareTag("inivisiwall"))
         {
             Destroy(gameObject);
+            GameController.instance.IncreaseShots();
             PlayerController.instance.setShotFired(false);
         }
     }

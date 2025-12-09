@@ -5,10 +5,10 @@ public class PlayerController : MonoBehaviour
     float speed = 5f;
     private Rigidbody rb;
 
-    public int bulletVelocity;
+    [SerializeField] private int bulletVelocity = 200;
 
-    [SerializeField]private Transform camPos;
-    [SerializeField]private GameObject chocoBullet;
+    [SerializeField] private Transform camPos;
+    [SerializeField] private GameObject chocoBullet;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {

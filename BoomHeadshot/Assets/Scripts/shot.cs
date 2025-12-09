@@ -23,8 +23,18 @@ public class shot : MonoBehaviour
     {
         if (canColide)
         {
-            rb.isKinematic = true;
+            //rb.isKinematic = true;
             Debug.Log("Colided with" + other.name);    
+        }
+        
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("invisiwall"))
+        {
+            Debug.Log("WABLUA.");
+            Destroy(gameObject);    
         }
         
     }
